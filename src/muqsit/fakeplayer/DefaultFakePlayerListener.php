@@ -10,6 +10,7 @@ use muqsit\fakeplayer\network\listener\ClosureFakePlayerPacketListener;
 use pmmp\encoding\ByteBufferWriter;
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\ChangeDimensionPacket;
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\mcpe\protocol\ClientboundPacket;
 use pocketmine\network\mcpe\protocol\PlayerActionPacket;
 use pocketmine\network\mcpe\protocol\PlayStatusPacket;
@@ -38,7 +39,7 @@ final class DefaultFakePlayerListener implements FakePlayerListener{
 					if($session->isConnected()){
 						$packet = SetLocalPlayerAsInitializedPacket::create($entity_runtime_id);
 						$serializer = new ByteBufferWriter();
-						$packet->encode($serializer);
+						$packet->encode($serializer, ProtocolInfo::CURRENT_PROTOCOL);
 						$session->handleDataPacket($packet, $serializer->getData());
 					}
 				}), 40);
@@ -73,7 +74,7 @@ final class DefaultFakePlayerListener implements FakePlayerListener{
 						);
 
 						$serializer = new ByteBufferWriter();
-						$packet->encode($serializer);
+						$packet->encode($serializer, ProtocolInfo::CURRENT_PROTOCOL);
 						$session->handleDataPacket($packet, $serializer->getData());
 					}
 				}

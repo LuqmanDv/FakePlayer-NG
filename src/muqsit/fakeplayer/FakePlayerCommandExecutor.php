@@ -32,7 +32,7 @@ final class FakePlayerCommandExecutor implements CommandExecutor{
 
 	private function sendServerPacket(Player $sender, Packet $packet) : void{
 		$serializer = new ByteBufferWriter();
-		$packet->encode($serializer);
+		$packet->encode($serializer, ProtocolInfo::CURRENT_PROTOCOL);
 		$sender->getNetworkSession()->handleDataPacket($packet, $serializer->getData());
 	}
 
